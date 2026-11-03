@@ -1,0 +1,64 @@
+@import '@fontsource-variable/onest';
+@import '@fontsource-variable/geist-mono';
+:root {
+	--bg: #f1f1f1;
+	--accent_100: #4169e1;
+	--accent_80: #6787e7;
+	--accent_60: #8ca5ee;
+	--accent_40: #b3c3f4;
+	--accent_20: #d9e1fa;
+	--secondary: #575656;
+	--text: #141313;
+
+	--bold: 600;
+
+	--spacing-sm: 0.25rem;
+	--spacing-md: 0.5rem;
+	--spacing-lg: 1rem;
+	--spacing-xl: 1.5rem;
+
+	--text-sm: 0.8rem;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Onest Variable', sans-serif;
+}
+
+body {
+	padding: var(--spacing-xl);
+}
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flex-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.second-font {
+	font-family: 'Geist Mono Variable', monospace;
+}
+
+.stroke-stage-one {
+	stroke: var(--accent_20);
+}
+.stroke-stage-two {
+	stroke: var(--accent_40);
+}
+.stroke-stage-three {
+	stroke: var(--accent_60);
+}
+.stroke-stage-four {
+	stroke: var(--accent_80);
+}
+.stroke-stage-five {
+	stroke: var(--accent_100);
+}
