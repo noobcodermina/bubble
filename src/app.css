@@ -25,6 +25,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'Onest Variable', sans-serif;
+	user-select: none;
 }
 
 body {
@@ -61,4 +62,20 @@ body {
 }
 .stroke-stage-five {
 	stroke: var(--accent_100);
+}
+
+.bg-stage-one {
+	background-color: var(--accent_20);
+}
+.bg-stage-two {
+	background-color: var(--accent_40);
+}
+.bg-stage-three {
+	background-color: var(--accent_60);
+}
+.bg-stage-four {
+	background-color: var(--accent_80);
+}
+.bg-stage-five {
+	background-color: var(--accent_100);
 }

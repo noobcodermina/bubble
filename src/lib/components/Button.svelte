@@ -10,3 +10,15 @@
 </script>
 
 <button {...rest}>{@render children()}</button>
+
+<style>
+	button {
+		padding: var(--spacing-sm);
+		border: 2px solid var(--accent_80);
+		color: var(--text);
+		width: 50px;
+		background-color: var(--bg);
+		border-radius: 0.5rem;
+		font-weight: var(--bold);
+	}
+</style>

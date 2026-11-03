@@ -7,7 +7,7 @@
 		<Bubble />
 		<p>bubble</p>
 	</div>
-	<p class="liter-day-sum second-font">220 / 200</p>
+	<p class="liter-day-sum second-font">30d / 60L</p>
 </header>
 
 <style>
