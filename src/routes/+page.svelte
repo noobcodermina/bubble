@@ -1,42 +1,54 @@
 <script>
+	import { onMount } from 'svelte';
 	import Bubble from '../lib/assets/Bubble.svelte';
 	import Button from '../lib/components/Button.svelte';
 	let glassCounter = $state(0);
 
-	let mockData = $state([
-		{ id: 0, date: '23.12.2026.', glasses: 5 },
-		{ id: 1, date: '23.12.2026.', glasses: 5 },
-		{ id: 2, date: '23.12.2026.', glasses: 5 },
-		{ id: 3, date: '23.12.2026.', glasses: 5 },
-		{ id: 4, date: '23.12.2026.', glasses: 5 },
-		{ id: 5, date: '23.12.2026.', glasses: 5 },
-		{ id: 6, date: '23.12.2026.', glasses: 5 },
-		{ id: 7, date: '23.12.2026.', glasses: 5 },
-		{ id: 8, date: '23.12.2026.', glasses: 5 }
-	]);
+	//date stuff
+	let date = $state(new Date());
 
-	$effect(() => {
-		console.log(glassCounter);
+	let day = $state(date.getDate());
+	let month = $state(date.getMonth() + 1);
+	let fullYear = $state(date.getFullYear());
+
+	let year = Array.from(String(fullYear));
+
+	// batice ovaj kurac su ti podaci koji se pisu u ls
+
+	//kada se ucita sajt uzimamo podatke (da ih mozemo prikazati na sajtu)
+	let getStats = $state();
+	let statsArr = [];
+	let id = $state('');
+	onMount(() => {
+		id = crypto.randomUUID();
+		getStats = JSON.parse(localStorage.getItem('stats') ?? '[]');
+		statsArr.push(...getStats);
+	});
+	let dayStats = $derived({
+		date: `${day}/${month}/${year[2]}${year[3]}`,
+		glasses: glassCounter,
+		id: id
 	});
 </script>
 
 <div class="stats">
+	<!-- ovo sranje je koji je datum i koliki je serving, dan te jebo -->
 	<div class="date-and-serving flex-between">
-		<p class="second-font">12.02.2026.</p>
+		<p class="second-font">{day}/{month}/{year[2]}{year[3]}</p>
 		<p class="second-font">serving: 0.2l</p>
 	</div>
-
+	<!-- ova kurcina ovdje su baloni koji MIJENJAJU JEBENU BOJU KAD COUNTER SKACE... -->
 	<div class="bubble-row flex-between">
-		<Bubble />
-		<Bubble />
-		<Bubble />
-		<Bubble />
-		<Bubble />
-		<Bubble />
-		<Bubble />
-		<Bubble />
-		<Bubble />
-		<Bubble />
+		<Bubble style={glassCounter > 0 ? 'stroke:#c3cbfb' : ''} />
+		<Bubble style={glassCounter > 1 ? 'stroke:#c3cbfb' : ''} />
+		<Bubble style={glassCounter > 2 ? 'stroke:#a1b0f5' : ''} />
+		<Bubble style={glassCounter > 3 ? 'stroke:#a1b0f5' : ''} />
+		<Bubble style={glassCounter > 4 ? 'stroke:#8ca5ee' : ''} />
+		<Bubble style={glassCounter > 5 ? 'stroke:#8ca5ee' : ''} />
+		<Bubble style={glassCounter > 6 ? 'stroke:#8ca5ee' : ''} />
+		<Bubble style={glassCounter > 7 ? 'stroke:#6787e7' : ''} />
+		<Bubble style={glassCounter > 8 ? 'stroke:#6787e7' : ''} />
+		<Bubble style={glassCounter > 9 ? 'stroke:#4169e1' : ''} />
 	</div>
 
 	<div class="button-row flex-between">
@@ -62,22 +74,40 @@
 				}}>+</Button
 			>
 		</div>
-		<Button>Save</Button>
+		<Button
+			onclick={() => {
+				statsArr.push(dayStats);
+				localStorage.setItem('stats', JSON.stringify(statsArr));
+				glassCounter = 0;
+
+				window.location.reload();
+			}}>Save</Button
+		>
 	</div>
 </div>
 <p class="heatmap-title">Heatmap colors based on daily intake</p>
 <div class="heatmap-examples flex-center second-font">
 	<div class="second-font flex-center">0</div>
 	<div class="second-font flex-center bg-stage-one">1-2</div>
-	<div class="second-font flex-center bg-stage-two">2-4</div>
-	<div class="second-font flex-center bg-stage-three">4-6</div>
-	<div class="second-font flex-center bg-stage-four">6-9</div>
+	<div class="second-font flex-center bg-stage-two">3-4</div>
+	<div class="second-font flex-center bg-stage-three">5-7</div>
+	<div class="second-font flex-center bg-stage-four">8-9</div>
 	<div class="second-font flex-center bg-stage-five">10</div>
 </div>
 <p class="heatmap-title">Heatmap:</p>
 <div class="heatmap flex-center">
-	{#each mockData as data (data.id)}
-		<div class:bg-stage-one={data.glasses < 2} class:bg-stage-two={data.glasses == 5}></div>
+	{#each getStats as data (data.id)}
+		<div
+			class="flex-between"
+			class:bg-stage-one={data.glasses < 3 && data.glasses > 0}
+			class:bg-stage-two={data.glasses > 2 && data.glasses < 5}
+			class:bg-stage-three={data.glasses > 4 && data.glasses < 9}
+			class:bg-stage-four={data.glasses > 7 && data.glasses < 10}
+			class:bg-stage-five={data.glasses == 10}
+		>
+			<p>{data.glasses}s/{(data.glasses * 0.2).toFixed(2)}l</p>
+			<p>{data.date}</p>
+		</div>
 	{/each}
 </div>
 
@@ -105,10 +135,12 @@
 	.heatmap {
 		justify-content: flex-start;
 		gap: var(--spacing-sm);
-
+		flex-wrap: wrap;
+		flex-direction: column-reverse;
 		:global(div) {
-			width: 20px;
-			height: 20px;
+			width: 100%;
+			padding: var(--spacing-sm);
+			font-size: var(--text-sm);
 			border-radius: 0.25rem;
 			border: 2px solid var(--secondary);
 		}

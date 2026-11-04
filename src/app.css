@@ -48,22 +48,6 @@ body {
 	font-family: 'Geist Mono Variable', monospace;
 }
 
-.stroke-stage-one {
-	stroke: var(--accent_20);
-}
-.stroke-stage-two {
-	stroke: var(--accent_40);
-}
-.stroke-stage-three {
-	stroke: var(--accent_60);
-}
-.stroke-stage-four {
-	stroke: var(--accent_80);
-}
-.stroke-stage-five {
-	stroke: var(--accent_100);
-}
-
 .bg-stage-one {
 	background-color: var(--accent_20);
 }

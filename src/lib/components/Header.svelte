@@ -1,5 +1,16 @@
 <script>
+	import { onMount } from 'svelte';
 	import Bubble from '../assets/Bubble.svelte';
+
+	let headerStats = $state();
+	let liters = $state(0);
+	onMount(() => {
+		headerStats = JSON.parse(localStorage.getItem('stats') ?? '[]');
+
+		for (let i = 0; i < headerStats.length; i++) {
+			liters += headerStats[i].glasses;
+		}
+	});
 </script>
 
 <header class="flex-between">
@@ -7,7 +18,11 @@
 		<Bubble />
 		<p>bubble</p>
 	</div>
-	<p class="liter-day-sum second-font">30d / 60L</p>
+	<p class="liter-day-sum second-font">
+		{#if headerStats}
+			{headerStats.length}d / {liters}L
+		{/if}
+	</p>
 </header>
 
 <style>
