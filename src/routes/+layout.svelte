@@ -9,7 +9,6 @@
 <svelte:head>
 	<title>bubble - track water intake</title>
 	<meta name="description" content="This is a super simple way to track your water intake" />
-	<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 </svelte:head>
 
 <div class="wrapper">

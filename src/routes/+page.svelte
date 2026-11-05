@@ -13,8 +13,6 @@
 
 	let year = Array.from(String(fullYear));
 
-	// batice ovaj kurac su ti podaci koji se pisu u ls
-
 	//kada se ucita sajt uzimamo podatke (da ih mozemo prikazati na sajtu)
 	let getStats = $state();
 	let statsArr = [];
@@ -23,11 +21,20 @@
 		id = crypto.randomUUID();
 		getStats = JSON.parse(localStorage.getItem('stats') ?? '[]');
 		statsArr.push(...getStats);
+
+		//uzimamo localglasses
+
+		let local = localStorage.getItem('localGlasses');
+		glassCounter = Number(local);
 	});
 	let dayStats = $derived({
 		date: `${day}/${month}/${year[2]}${year[3]}`,
 		glasses: glassCounter,
 		id: id
+	});
+
+	$effect(() => {
+		localStorage.setItem('localGlasses', String(glassCounter));
 	});
 </script>
 
@@ -39,16 +46,66 @@
 	</div>
 	<!-- ova kurcina ovdje su baloni koji MIJENJAJU JEBENU BOJU KAD COUNTER SKACE... -->
 	<div class="bubble-row flex-between">
-		<Bubble style={glassCounter > 0 ? 'stroke:#c3cbfb' : ''} />
-		<Bubble style={glassCounter > 1 ? 'stroke:#c3cbfb' : ''} />
-		<Bubble style={glassCounter > 2 ? 'stroke:#a1b0f5' : ''} />
-		<Bubble style={glassCounter > 3 ? 'stroke:#a1b0f5' : ''} />
-		<Bubble style={glassCounter > 4 ? 'stroke:#8ca5ee' : ''} />
-		<Bubble style={glassCounter > 5 ? 'stroke:#8ca5ee' : ''} />
-		<Bubble style={glassCounter > 6 ? 'stroke:#8ca5ee' : ''} />
-		<Bubble style={glassCounter > 7 ? 'stroke:#6787e7' : ''} />
-		<Bubble style={glassCounter > 8 ? 'stroke:#6787e7' : ''} />
-		<Bubble style={glassCounter > 9 ? 'stroke:#4169e1' : ''} />
+		<Bubble
+			onclick={() => {
+				glassCounter = 1;
+			}}
+			style={glassCounter > 0 ? 'stroke:#c3cbfb' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 2;
+			}}
+			style={glassCounter > 1 ? 'stroke:#c3cbfb' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 3;
+			}}
+			style={glassCounter > 2 ? 'stroke:#a1b0f5' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 4;
+			}}
+			style={glassCounter > 3 ? 'stroke:#a1b0f5' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 5;
+			}}
+			style={glassCounter > 4 ? 'stroke:#8ca5ee' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 6;
+			}}
+			style={glassCounter > 5 ? 'stroke:#8ca5ee' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 7;
+			}}
+			style={glassCounter > 6 ? 'stroke:#8ca5ee' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 8;
+			}}
+			style={glassCounter > 7 ? 'stroke:#6787e7' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 9;
+			}}
+			style={glassCounter > 8 ? 'stroke:#6787e7' : ''}
+		/>
+		<Bubble
+			onclick={() => {
+				glassCounter = 10;
+			}}
+			style={glassCounter > 9 ? 'stroke:#4169e1' : ''}
+		/>
 	</div>
 
 	<div class="button-row flex-between">
